@@ -14,8 +14,8 @@ class LanguagePack::Gostatic < LanguagePack::Rails41
   def compile
     instrument "gostatic.compile" do
       super
-      puts "Installing Jekyll 2.5.3"
-      pipe "/app/bin/gem install jekyll -v 2.5.3", out: "2>&1", user_env: true
+      puts "Installing Jekyll 2.4.0"
+      pipe "/app/bin/gem install jekyll -v 2.4.0", out: "2>&1", user_env: true
     end
   end
 
