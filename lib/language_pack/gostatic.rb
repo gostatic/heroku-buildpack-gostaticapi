@@ -7,6 +7,10 @@ class LanguagePack::Gostatic < LanguagePack::Rails41
     true
   end
 
+  def name
+    "Ruby/Rails (Gostatic)"
+  end
+
   def compile
     instrument "gostatic.compile" do
       run!("/app/bin/gem install jekyll -v 2.5.3")
