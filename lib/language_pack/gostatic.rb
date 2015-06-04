@@ -1,5 +1,5 @@
 require "language_pack"
-require "language_pack/rails41"
+require "language_pack/rails42"
 
 class LanguagePack::Gostatic < LanguagePack::Rails42
   # detects if this is a Rails 4.2 app
