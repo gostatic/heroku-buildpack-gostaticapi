@@ -13,7 +13,8 @@ class LanguagePack::Gostatic < LanguagePack::Rails41
 
   def compile
     instrument "gostatic.compile" do
-      run!("/app/bin/gem install jekyll -v 2.5.3")
+      puts "Installing Jekyll 2.5.3"
+      pipe "/app/bin/gem install jekyll -v 2.5.3", out: "2>&1", user_env: true
       super
     end
   end
