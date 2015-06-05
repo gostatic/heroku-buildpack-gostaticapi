@@ -14,10 +14,11 @@ class LanguagePack::Gostatic < LanguagePack::Rails41
   def compile
     instrument "gostatic.compile" do
       super
-      puts "Installing Jekyll 2.4.0"
+      jekyll_version = "2.4.0"
+      puts "Installing Jekyll #{jekyll_version}"
       jekyll_gem_path = "/app/vendor/jekyll-gem"
       @cache.load("jekyll_gem", jekyll_gem_path)
-      pipe "/app/bin/gem install jekyll -v 2.4.0 --install-dir #{jekyll_gem_path}", out: "2>&1", user_env: true
+      pipe "/app/bin/gem install jekyll -v #{jekyll_version} --install-dir #{jekyll_gem_path}", out: "2>&1", user_env: true
       @cache.store(jekyll_gem_path, "jekyll_gem")
     end
   end
