@@ -16,6 +16,7 @@ class LanguagePack::Gostatic < LanguagePack::Rails41
       super
       puts "Installing Jekyll 2.4.0"
       pipe "/app/bin/gem install jekyll -v 2.4.0", out: "2>&1", user_env: true
+      @bundler_cache.store
     end
   end
 
