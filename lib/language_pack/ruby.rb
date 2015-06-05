@@ -569,15 +569,6 @@ WARNING
         if $?.success?
           puts "Bundle completed (#{"%.2f" % bundle_time}s)"
           log "bundle", :status => "success"
-          puts "Cleaning up the bundler cache."
-          instrument "ruby.bundle_clean" do
-            # Only show bundle clean output when not using default cache
-            if load_default_cache?
-              run("#{bundle_bin} clean > /dev/null", user_env: true)
-            else
-              pipe("#{bundle_bin} clean", out: "2> /dev/null", user_env: true)
-            end
-          end
           @bundler_cache.store
 
           # Keep gem cache out of the slug

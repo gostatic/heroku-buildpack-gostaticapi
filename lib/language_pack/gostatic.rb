@@ -20,14 +20,22 @@ class LanguagePack::Gostatic < LanguagePack::Rails41
 
   def install_jekyll
     jekyll_version = "2.4.0"
-    jekyll_gem_path = "#{build_path}/vendor/jekyll-gem"
     puts "Installing Jekyll #{jekyll_version}"
-    puts "  #{jekyll_gem_path}"
-    @cache.load("jekyll_gem", jekyll_gem_path)
-    pipe "/app/bin/gem install jekyll -v #{jekyll_version} --install-dir #{jekyll_gem_path}", out: "2>&1", user_env: true
-    @cache.store(jekyll_gem_path, "jekyll_gem")
-    set_export_override 'GEM_PATH', "/app/vendor/jekyll-gem:#{ENV['GEM_PATH']}"
-    set_export_override 'PATH', "/app/vendor/jekyll-gem/bin:#{ENV['PATH']}"
+    pipe "/app/bin/gem install jekyll -v #{jekyll_version}", out: "2>&1", user_env: true
+    clean_bundler_cache
+    @bundler_cache.store
+  end
+
+  def clean_bundler_cache
+    puts "Cleaning up the bundler cache."
+    instrument "ruby.bundle_clean" do
+      # Only show bundle clean output when not using default cache
+      if load_default_cache?
+        run("#{bundle_bin} clean > /dev/null", user_env: true)
+      else
+        pipe("#{bundle_bin} clean", out: "2> /dev/null", user_env: true)
+      end
+    end
   end
 
   def default_config_vars
