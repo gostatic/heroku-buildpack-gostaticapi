@@ -21,7 +21,7 @@ class LanguagePack::Gostatic < LanguagePack::Rails41
       @cache.load("jekyll_gem", jekyll_gem_path)
       pipe "/app/bin/gem install jekyll -v #{jekyll_version} --install-dir #{jekyll_gem_path}", out: "2>&1", user_env: true
       @cache.store(jekyll_gem_path, "jekyll_gem")
-      ENV['GEM_PATH'] = "/app/vendor/jekyll-gem"
+      ENV['GEM_PATH'] = "/app/vendor/jekyll-gem:#{ENV['GEM_PATH']}"
       ENV["PATH"] = "#{ENV['GEM_PATH']}/bin:#{ENV['PATH']}"
     end
   end
